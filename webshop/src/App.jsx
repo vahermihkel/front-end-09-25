@@ -15,9 +15,11 @@ import Supplier2 from './pages/admin/Supplier2'
 import Supplier3 from './pages/admin/Supplier3'
 import AdminHome from './pages/admin/AdminHome'
 import ManageProducts from './pages/admin/ManageProducts'
+import Login from './pages/auth/Login'
+import Signup from './pages/auth/Signup'
+import Profile from './pages/auth/Profile'
 
 function App() {
-  // const [count, setCount] = useState(0)
 
   return (
     <>
@@ -37,6 +39,10 @@ function App() {
         <Route path='/admin/supplier2' element={ <Supplier2 /> } />
         <Route path='/admin/supplier3' element={ <Supplier3 /> } />
         <Route path='/admin/halda-tooteid' element={ <ManageProducts /> } />
+
+        <Route path='/login' element={ <Login /> } />
+        <Route path='/signup' element={ <Signup /> } />
+        <Route path='/profile' element={ <Profile /> } />
 
         <Route path='/*' element={ <NotFound /> } />
       </Routes>

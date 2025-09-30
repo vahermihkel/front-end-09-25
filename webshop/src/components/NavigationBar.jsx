@@ -1,12 +1,18 @@
+import { useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-
 // import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap"
-
 import { Link } from 'react-router-dom';
+import { CartSumContext } from '../context/CartSumContext';
+import { AuthContext } from '../context/AuthContext';
+import { useSelector } from 'react-redux';
 
 function NavigationBar() {
+  const {cartSum} = useContext(CartSumContext);
+  const {loggedIn, logout} = useContext(AuthContext);
+  const count = useSelector(state => state.counter.value);
+
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
       <Container>
@@ -22,6 +28,17 @@ function NavigationBar() {
             <Nav.Link as={Link} to="/admin">Admin</Nav.Link>
             <Nav.Link as={Link} to="/kinkekaart">Giftcards</Nav.Link>
             <Nav.Link as={Link} to="/poed">Shops</Nav.Link>
+            <span>{cartSum >= 0 ? cartSum.toFixed(2) : 0} € / {count} pcs</span>
+            {loggedIn ? 
+             <>
+              <button onClick={() => logout()}>Logout</button>
+              <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
+             </> : 
+             <>
+              <Nav.Link as={Link} to="/login">Login</Nav.Link>
+              <Nav.Link as={Link} to="/signup">Sign up</Nav.Link>
+             </>
+             }
           </Nav>
         </Navbar.Collapse>
       </Container>

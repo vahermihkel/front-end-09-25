@@ -1,5 +1,5 @@
 
-function Payment() {
+function Payment(props) { // Payment({ isDisabled })
   
   function pay() {
     const url = "https://igw-demo.every-pay.com/api/v4/payments/oneoff";
@@ -25,7 +25,7 @@ function Payment() {
   }
 
   return (
-    <button onClick={() => pay()}>Maksa</button>
+    <button disabled={props.isDisabled} onClick={() => pay()}>Maksa</button>
   )
 }
 

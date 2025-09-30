@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+// import Card from "../../components/ui/Card"
 
 function AdminHome() {
   return (
@@ -22,6 +23,16 @@ function AdminHome() {
       <Link to="/admin/halda-tooteid">
         <button>Halda tooteid</button>
       </Link>
+
+      {/* <Card>
+        <p>Hello!!</p>
+        <h2>This is Card</h2>
+      </Card>
+
+      <Card>
+        <p>Howdy!!</p>
+        <h2>This is Card2</h2>
+      </Card> */}
     </div>
   )
 }

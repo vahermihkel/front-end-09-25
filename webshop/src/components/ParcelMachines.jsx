@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
+import Dropdown from "./ui/Dropdown";
 
 function ParcelMachines() {
   const [dbParcelMachines, setDbParcelMachines] = useState([]);
   const [parcelMachines, setParcelMachines] = useState([]);
   const [loading, setLoading] = useState([]);
-  const [country, setCountry] = useState("Eesti");
+  const [country, setCountry] = useState("Kõik");
+  const [selectedPM, setSelectedPM] = useState("");
 
   useEffect(() => {
     fetch("https://www.omniva.ee/locations.json")
@@ -17,8 +19,17 @@ function ParcelMachines() {
   }, []);
 
   function updateParcelMachines(newCountry) {
-    const result = dbParcelMachines.filter(pm => pm.A0_NAME === newCountry);
+    let result = [];
+    if (newCountry === "") {
+      result = dbParcelMachines.slice();
+    } else {
+      result = dbParcelMachines.filter(pm => pm.A0_NAME === newCountry);
+    }
     switch(newCountry) {
+      case "": {
+        setCountry("Kõik");
+        break;
+      }
       case "EE": {
         setCountry("Eesti");
         break;
@@ -35,25 +46,35 @@ function ParcelMachines() {
     setParcelMachines(result);
   } 
 
+  // function handleSelectedPM(pm) {
+  //   setSelectedPM(pm);
+  // }
+
   if (loading) {
     return <div>Loading...</div>
   }
 
   return (
     <div>
+      <button onClick={() => updateParcelMachines("")}>Kõik</button>
       <button onClick={() => updateParcelMachines("EE")}>Eesti</button>
       <button onClick={() => updateParcelMachines("LV")}>Läti</button>
       <button onClick={() => updateParcelMachines("LT")}>Leedu</button>
       <div>Valitud riik: {country}</div>
       <br /><br />
       <div>Vali pakiautomaat:</div>
-      <select>
+      <Dropdown 
+        handleSelect={setSelectedPM} 
+        options={parcelMachines.map(pm => pm.NAME)} 
+        header="Parcelmachines" />
+      {/* <select>
         {parcelMachines.map(pm => 
           <option key={pm.NAME}>
             {pm.NAME}
           </option>
         )}
-      </select>
+      </select> */}
+      <div>Valitud pakiautomaat: {selectedPM}</div>
     </div>
   )
 }

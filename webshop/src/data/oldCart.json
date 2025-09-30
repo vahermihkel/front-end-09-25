@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1, 
+    "name": "Coca-cola", 
+    "price": 1.2,
+    "image": "example.com/coke.jpg",
+    "active": true,
+    "category": "drink"  
+  },
+  {
+    "id": 1, 
+    "name": "Coca-cola", 
+    "price": 1.2,
+    "image": "example.com/coke.jpg",
+    "active": true,
+    "category": "drink"
+  },
+  {
+    "id": 1, 
+    "name": "Coca-cola", 
+    "price": 1.2,
+    "image": "example.com/coke.jpg",
+    "active": true,
+    "category": "drink"
+  },
+  {
+    "id": 4, 
+    "name": "Fanta", 
+    "price": 1.2,
+    "image": "example.com/fanta.jpg",
+    "active": true,
+    "category": "drink"
+  },
+  {
+    "id": 1, 
+    "name": "Coca-cola", 
+    "price": 1.2,
+    "image": "example.com/coke.jpg",
+    "active": true,
+    "category": "drink"
+  }
+]

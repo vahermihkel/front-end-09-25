@@ -1,7 +1,5 @@
 #root {
-  /* max-width: 1280px; */
   margin: 0 auto;
-  /* padding: 2rem; */
   text-align: center;
 }
 
@@ -19,4 +17,12 @@
 .amount-active {
   color: rgb(227 6 140);
   border: 1px solid rgb(227 6 140) !important;
+}
+
+.dropdown-option {
+  font-weight: 500;
+  text-align: left;
+}
+.dropdown-option:hover {
+  cursor: pointer;
 }

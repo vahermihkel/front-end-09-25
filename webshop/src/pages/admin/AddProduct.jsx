@@ -2,10 +2,13 @@ import { useState } from "react";
 import productsJSON from "../../data/products.json"
 import toast, { Toaster } from 'react-hot-toast';
 import { TextField } from "@mui/material";
+import Dropdown from "../../components/ui/Dropdown";
+import Checkbox from "../../components/ui/Checkbox";
 // import { NumberField } from '@base-ui-components/react/number-field';
 
 function AddProduct() {
   const [product, setProduct] = useState({});
+  const categories = ["drink", "snack", "fruit", "electronics", "clothing"];
 
   function add() {
     if (!product.name) {
@@ -20,6 +23,10 @@ function AddProduct() {
 
     productsJSON.push(product);
     toast.success('Product successfully added');
+  }
+
+  function updateField(value, key) {
+    setProduct({...product, [key]: value});
   }
 
   return (
@@ -39,23 +46,14 @@ function AddProduct() {
         onChange={(e) => setProduct({...product, image: e.target.value})} />
       <br /><br />
       
-      <div className="items-center mb-4">
-        <input 
-          id="active-checkbox" 
-          type="checkbox" 
-          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
-          onChange={(e) => setProduct({...product, active: e.target.checked})}
-        />
-        <label htmlFor="active-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-          Active
-        </label>
-      </div>
+      <Checkbox handleChecked={updateField} label="Active" />
       
-      <label>Category</label> <br />
-      <input onChange={(e) => setProduct({...product, category: e.target.value})} type="text" /> <br />
+      <Dropdown handleSelect={updateField} options={categories} header="category" />
+      <br /><br />
+      {/* <input onChange={(e) => setProduct({...product, category: e.target.value})} type="text" /> <br /> */}
       <button onClick={add}>Sisesta</button> <br />
 
-       <Toaster />
+      <Toaster />
     </div>
   )
 }

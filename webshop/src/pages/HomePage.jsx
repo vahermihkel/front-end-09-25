@@ -1,10 +1,17 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import productsJSON from "../data/products.json"
 import { Button } from "@mui/material";
 import { Button as BButton } from "react-bootstrap";
+// import LiisaButton from "../components/ui/LiisaButton";
+import toast, { Toaster } from 'react-hot-toast';
+import { CartSumContext } from "../context/CartSumContext";
+import { increment } from "../store/counterSlice";
+import { useDispatch } from "react-redux";
 
 function HomePage() {
   const [products, setProducts] = useState(productsJSON);
+  const { increaseCartSum } = useContext(CartSumContext);
+  const dispatch = useDispatch();
 
   function sortAZ() {
     productsJSON.sort((a,b) => a.name.localeCompare(b.name));
@@ -37,11 +44,20 @@ function HomePage() {
     setProducts(result);
   }
 
-  function addToCart(product) {
+  function addToCart(clickedProduct) {
     // const cartLS = JSON.parse(localStorage.getItem("cart") || "[]");
     const cartLS = JSON.parse(localStorage.getItem("cart")) || [];
-    cartLS.push(product); 
+    const found = cartLS.find(cartProduct => cartProduct.product.id === clickedProduct.id);
+    if (found) {
+      // suurendan kogust
+      found.quantity++;
+    } else {
+      cartLS.push({quantity: 1, product: clickedProduct}); 
+    }
     localStorage.setItem("cart", JSON.stringify(cartLS));
+    toast.success('Product successfully added to cart');
+    increaseCartSum(clickedProduct.price);
+    dispatch(increment());
   } 
 
   // LocalStorage-sse array panemiseks:
@@ -53,6 +69,13 @@ function HomePage() {
 
   return (
     <div>
+      {/* <LiisaButton variant="primary">1</LiisaButton>
+      <br /><br />
+      <LiisaButton variant="secondary">2</LiisaButton>
+      <br /><br />
+      <LiisaButton variant="logOut">3</LiisaButton> */}
+
+
       <div>Kokku on {products.length} toodet</div>
       <Button onClick={() => sortAZ()}>Sorteeri A-Z</Button>
       <Button onClick={sortZA}>Sorteeri Z-A</Button>
@@ -69,6 +92,8 @@ function HomePage() {
           <BButton onClick={() => addToCart(product)}>Lisa ostukorvi</BButton>
         </div>
       )}
+
+      <Toaster />
     </div>
   )
 }
